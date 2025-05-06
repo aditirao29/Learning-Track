@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learning Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Learning Tracker</h1>
+
+        <div class="add"><a class="button" href="{{ url_for('add') }}">Add New Topic</a></div>
+        {% if topics %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for topic in topics %}
+                    <tr>
+                        <td>{{ topic.title }}</td>
+                        <td>{{ topic.description }}</td>
+                        <td>
+                            <a class="button" href="{{ url_for('update', topic_id=topic.id) }}">Edit</a>
+                            <a class="button delete" href="{{ url_for('delete', topic_id=topic.id) }}" onclick="return confirm('Are you sure you want to delete this topic?');">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No topics found. Add one!</p>
+        {% endif %}
+        
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+</body>
+</html>
